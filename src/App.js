@@ -44,7 +44,11 @@ function App() {
 
   function handleAddEntry(newEntry) {
     console.log("in handleAddEntry mit ", newEntry);
-    setEntries([{ ...newEntry, id: uid() }, ...entries]);
+    const date = new Date().toLocaleDateString("en-us", {
+      dateStyle: "medium",
+    });
+    setEntries([{ ...newEntry, id: uid(), date: date }, ...entries]);
+    // setEntries([{ ...newEntry, id: uid(), date }, ...entries]);  Kurzschreibweise in JS
   }
 
   return (
