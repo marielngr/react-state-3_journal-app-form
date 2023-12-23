@@ -4,6 +4,7 @@ import EntryForm from "./components/EntryForm";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { useState } from "react";
+import { uid } from "uid";
 
 const initialEntries = [
   {
@@ -36,14 +37,22 @@ const initialEntries = [
 ];
 
 function App() {
-  const [entries, setEntries] = useState([initialEntries]);
+  const [entries, setEntries] = useState(initialEntries);
+
+  // der Aufruf von handleAddEntry erfolgt in EntryForm/index.js in dieser Zeile: onAddEntry(data);
+  // denn in EntryForm ist onAddEntry ein Verweis auf handleAddEntry (siehe Aufruf von EntryForm in jsx unten in dieser Datei)
+
+  function handleAddEntry(newEntry) {
+    console.log("in handleAddEntry mit ", newEntry);
+    setEntries([{ ...newEntry, id: uid() }, ...entries]);
+  }
 
   return (
     <div className="app">
       <Header />
       <main className="app__main">
-        <EntryForm />
-        <EntriesSection />
+        <EntryForm onAddEntry={handleAddEntry} />
+        <EntriesSection entries={entries} />
       </main>
       <Footer />
     </div>
